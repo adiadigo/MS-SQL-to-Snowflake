@@ -1,0 +1,7 @@
+name: migration_env
+channels:
+  - snowflake
+dependencies:
+  - streamlit==1.35.0
+  - pandas==2.2.2
+  - pyodbc==5.1.0

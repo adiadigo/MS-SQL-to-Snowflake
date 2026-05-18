@@ -1,0 +1,34 @@
+manifest_version: 1
+
+version:
+  name: v1
+  label: "1.0.0"
+  comment: "MS SQL to Snowflake Migration Tool — Marketplace Edition"
+
+artifacts:
+  setup_script: setup.sql
+  default_streamlit: app_schema.migration_ui
+  readme: README.md
+  extension_code: true
+  files:
+    - procedures/sp_discover.py
+    - procedures/sp_migrate.py
+    - procedures/sp_validate.py
+    - app/streamlit_app.py
+    - app/environment.yml
+
+privileges:
+  - CREATE COMPUTE POOL:
+      description: "Required to run the SnowConvert SPCS translation service"
+  - BIND SERVICE ENDPOINT:
+      description: "Required to expose the SPCS translation service internally"
+
+references:
+  - MIGRATION_EAI:
+      label: "MS SQL External Network Access"
+      description: "Allows outbound TCP to Azure MS SQL Server on port 1433"
+      privileges:
+        - USAGE
+      object_type: EXTERNAL ACCESS INTEGRATION
+      register_callback: app_schema.register_eai_callback
+      configuration_callback: app_schema.get_eai_config
