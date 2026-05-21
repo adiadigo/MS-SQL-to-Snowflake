@@ -1,0 +1,5 @@
+#!/usr/bin/expect -f
+spawn scai terms accept
+expect "y/n"
+send "y\r"
+expect eof

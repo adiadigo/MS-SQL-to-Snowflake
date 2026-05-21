@@ -21,19 +21,25 @@ This creates a login with `db_datareader` + `VIEW DEFINITION` — read-only, no 
 
 ### 3. Build & Push the SnowConvert Docker Image
 
+SnowConvert AI CLI (`scai`) is **free** — no license key or download URL required.
+The Dockerfile installs it automatically via the official installer script.
+
 ```bash
 # Authenticate to your Snowflake image registry
 snow spcs image-registry login
 
-# Build — supply your SnowConvert CLI download URL
+# Build (no --build-arg needed)
 docker build \
-  --build-arg SCAI_DOWNLOAD_URL="https://<your-scai-download-url>" \
   -t <ORGNAME>-<ACCTNAME>.registry.snowflakecomputing.com/app_schema/scai_repo/scai_service:latest \
   scai_service/
 
 # Push
 docker push <ORGNAME>-<ACCTNAME>.registry.snowflakecomputing.com/app_schema/scai_repo/scai_service:latest
 ```
+
+> **Note:** `scai` authenticates to Snowflake using your Snowflake CLI connection
+> (`snow connection test`). The SPCS container inherits the service's Snowflake
+> identity automatically — no additional credential configuration is needed.
 
 ### 4. Upload Procedure Files to Stage
 

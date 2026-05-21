@@ -1,14 +1,19 @@
 FROM ubuntu:22.04
 
-ARG SCAI_DOWNLOAD_URL
 ENV DEBIAN_FRONTEND=noninteractive
+ENV PATH="/root/.local/bin:/usr/local/bin:${PATH}"
 
 RUN apt-get update && apt-get install -y \
-    python3.11 python3.11-venv python3-pip curl \
+    python3.11 python3.11-venv python3-pip curl bash expect \
+    libicu70 libssl3 \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -fSL "${SCAI_DOWNLOAD_URL}" -o /usr/local/bin/scai \
-    && chmod +x /usr/local/bin/scai
+# Install scai CLI
+RUN curl -fsSL https://snowconvert.snowflake.com/storage/linux/prod/cli/install.sh | bash
+
+# Accept terms using expect to handle the interactive prompt
+COPY accept_terms.exp /tmp/accept_terms.exp
+RUN expect /tmp/accept_terms.exp
 
 WORKDIR /app
 COPY requirements.txt .
