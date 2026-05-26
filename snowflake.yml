@@ -1,0 +1,28 @@
+definition_version: 2
+
+entities:
+  migration_app_pkg:
+    type: application package
+    manifest: manifest.yml
+    artifacts:
+      - src: setup.sql
+        dest: setup.sql
+      - src: manifest.yml
+        dest: manifest.yml
+      - src: README.md
+        dest: README.md
+      - src: app/streamlit_app.py
+        dest: app/streamlit_app.py
+      - src: app/environment.yml
+        dest: app/environment.yml
+      - src: procedures/sp_discover.py
+        dest: procedures/sp_discover.py
+      - src: procedures/sp_migrate.py
+        dest: procedures/sp_migrate.py
+      - src: procedures/sp_validate.py
+        dest: procedures/sp_validate.py
+
+  migration_app:
+    type: application
+    from:
+      target: migration_app_pkg

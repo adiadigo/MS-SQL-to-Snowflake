@@ -4,16 +4,12 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV PATH="/root/.local/bin:/usr/local/bin:${PATH}"
 
 RUN apt-get update && apt-get install -y \
-    python3.11 python3.11-venv python3-pip curl bash expect \
-    libicu70 libssl3 \
+    python3.11 python3.11-venv python3-pip curl bash \
     && rm -rf /var/lib/apt/lists/*
 
-# Install scai CLI
-RUN curl -fsSL https://snowconvert.snowflake.com/storage/linux/prod/cli/install.sh | bash
-
-# Accept terms using expect to handle the interactive prompt
-COPY accept_terms.exp /tmp/accept_terms.exp
-RUN expect /tmp/accept_terms.exp
+# Install scai CLI and accept terms in one layer so PATH is resolved correctly
+RUN curl -fsSL https://snowconvert.snowflake.com/storage/linux/prod/cli/install.sh | bash \
+    && scai terms accept
 
 WORKDIR /app
 COPY requirements.txt .

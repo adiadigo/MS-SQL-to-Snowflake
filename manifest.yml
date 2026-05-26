@@ -10,12 +10,6 @@ artifacts:
   default_streamlit: app_schema.migration_ui
   readme: README.md
   extension_code: true
-  files:
-    - procedures/sp_discover.py
-    - procedures/sp_migrate.py
-    - procedures/sp_validate.py
-    - app/streamlit_app.py
-    - app/environment.yml
 
 privileges:
   - CREATE COMPUTE POOL:

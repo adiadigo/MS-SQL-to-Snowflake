@@ -194,8 +194,7 @@ GRANT USAGE ON PROCEDURE app_schema.sp_validate_table(VARCHAR, VARCHAR, VARCHAR,
 -- ---------------------------------------------------------------------------
 CREATE OR REPLACE STREAMLIT app_schema.migration_ui
     ROOT_LOCATION = '@app_schema.app_stage/app'
-    MAIN_FILE     = 'streamlit_app.py'
-    QUERY_WAREHOUSE = (SELECT CURRENT_WAREHOUSE());
+    MAIN_FILE     = 'streamlit_app.py';
 
 GRANT USAGE ON STREAMLIT app_schema.migration_ui
     TO APPLICATION ROLE migration_role;
